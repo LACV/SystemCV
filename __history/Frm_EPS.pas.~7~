@@ -1,0 +1,134 @@
+unit Frm_EPS;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFrmEPS = class(TForm)
+    DBGView: TDBGrid;
+    PnCabezal: TPanel;
+    Separador: TImage;
+    LbBuscar: TLabel;
+    separador2: TImage;
+    BtnNew: TButton;
+    EdtBuscar: TEdit;
+    BtnEdit: TButton;
+    PnCrud: TPanel;
+    Label5: TLabel;
+    Label1: TLabel;
+    EdtName: TEdit;
+    BtnSave: TButton;
+    BtnCancel: TButton;
+    EdtCod: TEdit;
+    procedure BtnNewClick(Sender: TObject);
+    procedure BtnCancelClick(Sender: TObject);
+    procedure BtnEditClick(Sender: TObject);
+    procedure BtnSaveClick(Sender: TObject);
+    procedure EdtBuscarChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmEPS: TFrmEPS;
+
+implementation
+
+{$R *.dfm}
+
+uses Module_Basic, Module_Global;
+
+procedure TFrmEPS.BtnCancelClick(Sender: TObject);
+begin
+  ModuleGlobal.activateDeactivate(false, PnCrud, DBGView, BtnEdit,
+    BtnNew, Self);
+end;
+
+procedure TFrmEPS.BtnEditClick(Sender: TObject);
+begin
+  with ModuleBasic.QEPS do
+  begin
+    if recordcount > 0 then
+    begin
+      EdtCod.Text := FieldByName('idEps').AsString;
+      EdtName.Text := FieldByName('Eps').AsString;
+
+      ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit,
+        BtnNew, Self);
+    end;
+  end;
+end;
+
+procedure TFrmEPS.BtnNewClick(Sender: TObject);
+begin
+  ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit, BtnNew, Self);
+end;
+
+procedure TFrmEPS.BtnSaveClick(Sender: TObject);
+var
+  Fields, Values: TStringList;
+  results: boolean;
+  table, idTable: string;
+begin
+  if (EdtName.Text = '') then
+  begin
+    ShowMessage('Los Campos con (*) son Obligatorios.');
+  end
+  else
+  begin
+    // we group the fields and values for the query
+    Fields := TStringList.Create;
+    Values := TStringList.Create;
+
+    table := 'eps';
+    idTable := 'idEps';
+
+    Fields.Add('Eps');
+
+    Values.Add(EdtName.Text);
+
+    with ModuleGlobal do
+    begin
+      case EdtCod.Text = '' of
+        true:
+          begin
+            // New data
+            results := insertUpdateData(Fields, Values, table, '', '');
+          end;
+        false:
+          begin
+            // Edit data
+            results := insertUpdateData(Fields, Values, table,
+              EdtCod.Text, idTable);
+          end;
+      end;
+
+      case results of
+        true:
+          ShowMessage('Success Saving Record.');
+        false:
+          ShowMessage('¡ Mistake ! Unexpected.');
+      end;
+
+      ModuleBasic.resetEPS();
+      activateDeactivate(false, PnCrud, DBGView, BtnEdit, BtnNew, Self);
+    end;
+  end;
+end;
+
+procedure TFrmEPS.EdtBuscarChange(Sender: TObject);
+begin
+  with ModuleBasic.QCompany do
+  begin
+    FilterOptions := [foCaseInsensitive];
+    Filter := 'Eps like ' + QuotedStr('%' + EdtBuscar.Text + '%'));
+    Filtered := true; end; end;
+
+    end.

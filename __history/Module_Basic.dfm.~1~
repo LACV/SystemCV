@@ -1,0 +1,19 @@
+object ModuleCompany: TModuleCompany
+  OldCreateOrder = False
+  Height = 251
+  Width = 296
+  object QCompany: TUniQuery
+    SQLInsert.Strings = (
+      '')
+    Connection = ModuleGlobal.UConex
+    SQL.Strings = (
+      'select * from company')
+    Left = 32
+    Top = 11
+  end
+  object DSCompany: TDataSource
+    DataSet = QCompany
+    Left = 32
+    Top = 67
+  end
+end

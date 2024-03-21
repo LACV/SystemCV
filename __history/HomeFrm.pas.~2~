@@ -1,0 +1,58 @@
+unit HomeFrm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
+
+type
+  TFrmHome = class(TForm)
+    MenuBase: TMainMenu;
+    Archivo1: TMenuItem;
+    MCompany: TMenuItem;
+    N3: TMenuItem;
+    Configuracion: TMenuItem;
+    ServerConfig: TMenuItem;
+    ComConfig: TMenuItem;
+    N1: TMenuItem;
+    MUsuarios: TMenuItem;
+    CambiarPass: TMenuItem;
+    AdministradordeUsuarios: TMenuItem;
+    N2: TMenuItem;
+    CambiarUsuario: TMenuItem;
+    About: TMenuItem;
+    procedure MCompanyClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmHome: TFrmHome;
+
+implementation
+
+{$R *.dfm}
+
+uses Frm_Company;
+
+procedure TFrmHome.MCompanyClick(Sender: TObject);
+begin
+  try
+    FrmCompany := TFrmCompany.Create(Application);
+
+    with FrmCompany do
+    begin
+      ShowModal;
+    end;
+
+  finally
+    FreeAndNil(FrmCompany);
+    //FrmHome.Visible := true;
+  end;
+end;
+
+end.

@@ -1,0 +1,43 @@
+unit Frm_CCF;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFrmCCF = class(TForm)
+    DBGView: TDBGrid;
+    PnCabezal: TPanel;
+    Separador: TImage;
+    LbBuscar: TLabel;
+    separador2: TImage;
+    BtnNew: TButton;
+    EdtBuscar: TEdit;
+    BtnEdit: TButton;
+    PnCrud: TPanel;
+    Label2: TLabel;
+    Label5: TLabel;
+    Label10: TLabel;
+    Label1: TLabel;
+    EdtId: TEdit;
+    EdtName: TEdit;
+    BtnSave: TButton;
+    BtnCancel: TButton;
+    EdtCod: TEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmCCF: TFrmCCF;
+
+implementation
+
+{$R *.dfm}
+
+end.

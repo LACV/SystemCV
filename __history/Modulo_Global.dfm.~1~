@@ -1,0 +1,5 @@
+object ModuloGlobal: TModuloGlobal
+  OldCreateOrder = False
+  Height = 308
+  Width = 347
+end

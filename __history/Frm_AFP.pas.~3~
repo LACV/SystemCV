@@ -1,0 +1,59 @@
+unit Frm_AFP;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFrmAFP = class(TForm)
+    DBGView: TDBGrid;
+    PnCabezal: TPanel;
+    Separador: TImage;
+    LbBuscar: TLabel;
+    separador2: TImage;
+    BtnNew: TButton;
+    EdtBuscar: TEdit;
+    BtnEdit: TButton;
+    PnCrud: TPanel;
+    Label2: TLabel;
+    Label5: TLabel;
+    Label10: TLabel;
+    Label1: TLabel;
+    EdtId: TEdit;
+    EdtName: TEdit;
+    BtnSave: TButton;
+    BtnCancel: TButton;
+    EdtCod: TEdit;
+    procedure BtnNewClick(Sender: TObject);
+    procedure BtnCancelClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmAFP: TFrmAFP;
+
+implementation
+
+{$R *.dfm}
+
+uses Module_Basic, Module_Global;
+
+procedure TFrmAFP.BtnCancelClick(Sender: TObject);
+begin
+  ModuleGlobal.activateDeactivate(false, PnCrud, DBGView, BtnEdit,
+    BtnNew, Self);
+end;
+
+procedure TFrmAFP.BtnNewClick(Sender: TObject);
+begin
+  ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit, BtnNew, Self);
+end;
+
+end.

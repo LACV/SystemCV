@@ -1,0 +1,125 @@
+unit Frm_ARL;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFrmARL = class(TForm)
+    DBGView: TDBGrid;
+    PnCabezal: TPanel;
+    Separador: TImage;
+    LbBuscar: TLabel;
+    separador2: TImage;
+    BtnNew: TButton;
+    EdtBuscar: TEdit;
+    BtnEdit: TButton;
+    PnCrud: TPanel;
+    Label5: TLabel;
+    Label1: TLabel;
+    EdtName: TEdit;
+    BtnSave: TButton;
+    BtnCancel: TButton;
+    EdtCod: TEdit;
+    procedure BtnNewClick(Sender: TObject);
+    procedure BtnCancelClick(Sender: TObject);
+    procedure BtnEditClick(Sender: TObject);
+    procedure BtnSaveClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmARL: TFrmARL;
+
+implementation
+
+{$R *.dfm}
+
+uses Module_Basic, Module_Global;
+
+procedure TFrmARL.BtnCancelClick(Sender: TObject);
+begin
+  ModuleGlobal.activateDeactivate(false, PnCrud, DBGView, BtnEdit,
+    BtnNew, Self);
+end;
+
+procedure TFrmARL.BtnEditClick(Sender: TObject);
+begin
+  with ModuleBasic.QArl do
+  begin
+    if recordcount > 0 then
+    begin
+      EdtCod.Text := FieldByName('idArl').AsString;
+      EdtName.Text := FieldByName('Arl').AsString;
+
+      ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit,
+        BtnNew, Self);
+    end;
+  end;
+end;
+
+procedure TFrmARL.BtnNewClick(Sender: TObject);
+begin
+  ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit, BtnNew, Self);
+end;
+
+procedure TFrmARL.BtnSaveClick(Sender: TObject);
+var
+  Fields, Values: TStringList;
+  results: boolean;
+  table, idTable: string;
+begin
+  if (EdtName.Text = '') then
+  begin
+    ShowMessage('Los Campos con (*) son Obligatorios.');
+  end
+  else
+  begin
+    // we group the fields and values for the query
+    Fields := TStringList.Create;
+    Values := TStringList.Create;
+
+    table := 'arl';
+    idTable := 'idArl';
+
+    Fields.Add('Arl');
+
+    Values.Add(EdtName.Text);
+
+    with ModuleGlobal do
+    begin
+      case EdtCod.Text = '' of
+        true:
+          begin
+            // New data
+            results := insertUpdateData(Fields, Values, table, '', '');
+          end;
+        false:
+          begin
+            // Edit data
+            results := insertUpdateData(Fields, Values, table,
+              EdtCod.Text, idTable);
+          end;
+      end;
+
+      case results of
+        true:
+          ShowMessage('Success Saving Record.');
+        false:
+          ShowMessage('¡ Mistake ! Unexpected.');
+      end;
+
+      ModuleBasic.resetArl();
+      activateDeactivate(false, PnCrud, DBGView, BtnEdit, BtnNew, Self);
+    end;
+  end;
+end;
+
+end.

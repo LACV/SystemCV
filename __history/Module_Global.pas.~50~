@@ -1,0 +1,149 @@
+unit Module_Global;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DB, DBAccess, Uni, UniProvider,
+  MySQLUniProvider, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList, Vcl.Controls,
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, MemDS,
+  Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Forms;
+
+type
+  TModuleGlobal = class(TDataModule)
+    IdTCPClientServidor: TIdTCPClient;
+    ImageList2: TImageList;
+    ImageList1: TImageList;
+    ImgL32x32: TImageList;
+    IconMensaje: TTrayIcon;
+    ImgPrincipales32x32: TImageList;
+    MySQLUniProvider1: TMySQLUniProvider;
+    UConex: TUniConnection;
+    QFloating: TUniSQL;
+    UDSRespuesta: TUniDataSource;
+    QueryRespuesta: TUniQuery;
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure activateDeactivate(state: Boolean; PnCrud: TPanel;
+      DBGView: TDBGrid; BtnEdit, BtnNew: TButton; Form: TForm);
+    procedure clearForm(Form: TForm);
+    function insertUpdateData(fields, values: TStringList;
+      table, idCod, fieldWhere: string): Boolean;
+
+  end;
+
+var
+  ModuleGlobal: TModuleGlobal;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+{$R *.dfm}
+{ TModuleGlobal }
+
+procedure TModuleGlobal.activateDeactivate(state: Boolean; PnCrud: TPanel;
+  DBGView: TDBGrid; BtnEdit, BtnNew: TButton; Form: TForm);
+begin
+  if state = true then
+  begin
+    PnCrud.Visible := true;
+    DBGView.Enabled := false;
+    BtnEdit.Enabled := false;
+    BtnNew.Enabled := false;
+  end
+  else
+  begin
+    PnCrud.Visible := false;
+    DBGView.Enabled := true;
+    BtnEdit.Enabled := true;
+    BtnNew.Enabled := true;
+    clearForm(Form);
+  end;
+end;
+
+procedure TModuleGlobal.clearForm(Form: TForm);
+var
+  i: Integer;
+begin
+  // Go through all the components of the form.
+  for i := 0 to Form.ComponentCount - 1 do
+  begin
+    // If the component is a TEdit, set its Text to empty
+    if Form.Components[i] is TEdit then
+      TEdit(Form.Components[i]).Text := '';
+  end;
+end;
+
+function TModuleGlobal.insertUpdateData(fields, values: TStringList;
+  table, idCod, fieldWhere: string): Boolean;
+var
+  fieldsList, valuesList, fieldsValuesList, sql_: string;
+  i: Integer;
+begin
+
+  // Build the chain of fields and values
+  fieldsList := '';
+  valuesList := '';
+  fieldsValuesList := '';
+
+  for i := 0 to fields.Count - 1 do
+  begin
+    if i > 0 then
+    begin
+      case idCod = '' of
+        true:
+          begin
+            fieldsList := fieldsList + ', ';
+            valuesList := valuesList + ', ';
+          end;
+        false:
+          begin
+            fieldsValuesList := fieldsValuesList + ', ';
+          end;
+      end;
+    end;
+
+    case idCod = '' of
+      true:
+        begin
+          fieldsList := fieldsList + fields[i];
+          valuesList := valuesList + QuotedStr(values[i]);
+        end;
+      false:
+        fieldsValuesList := fieldsValuesList + fields[i] + '=' +
+          QuotedStr(values[i]);
+    end;
+
+  end;
+
+  // Build and run the insert query
+  case idCod = '' of
+    true:
+      sql_ := 'INSERT INTO ' + table + ' (' + fieldsList + ') VALUES (' +
+        valuesList + ')';
+    false:
+      sql_ := 'UPDATE ' + table + ' SET ' + fieldsValuesList + ' WHERE ' +
+        fieldWhere + '=' + QuotedStr(idCod);
+  end;
+
+  with QFloating do
+  begin
+    sql.Clear;
+    sql.Add(sql_);
+    try
+      Execute;
+      Result := true;
+    except
+      on E: Exception do
+      begin
+        Result := false;
+        ShowMessage('Error executing query: ' + E.Message);
+      end;
+    end;
+  end;
+
+end;
+
+end.

@@ -1,0 +1,102 @@
+object FrmHome: TFrmHome
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'FrmHome'
+  ClientHeight = 472
+  ClientWidth = 527
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = MenuBase
+  OldCreateOrder = False
+  Position = poScreenCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object MenuBase: TMainMenu
+    BiDiMode = bdLeftToRight
+    Images = DModulo.ImgL32x32
+    ParentBiDiMode = False
+    Left = 491
+    Top = 8
+    object Archivo1: TMenuItem
+      Caption = 'Archivo'
+      object MPerson: TMenuItem
+        Caption = 'Person'
+        OnClick = MPersonClick
+      end
+      object MCompany: TMenuItem
+        Caption = 'Company'
+        ImageIndex = 30
+        OnClick = MCompanyClick
+      end
+      object MEPS: TMenuItem
+        Caption = 'EPS'
+        OnClick = MEPSClick
+      end
+      object MARL: TMenuItem
+        Caption = 'ARL'
+        OnClick = MARLClick
+      end
+      object MAFP: TMenuItem
+        Caption = 'AFP'
+        OnClick = MAFPClick
+      end
+      object MCCF: TMenuItem
+        Caption = 'CCF'
+        OnClick = MCCFClick
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
+      object Configuracion: TMenuItem
+        Caption = 'Configuraci'#243'n'
+        ImageIndex = 25
+        object ServerConfig: TMenuItem
+          Caption = 'Server Config.properties'
+          ImageIndex = 23
+        end
+        object ComConfig: TMenuItem
+          Caption = 'Bascula Config.properties'
+          ImageIndex = 31
+        end
+      end
+      object N1: TMenuItem
+        Caption = '-'
+        GroupIndex = 2
+      end
+      object MUsuarios: TMenuItem
+        Caption = 'Usuarios'
+        GroupIndex = 2
+        ImageIndex = 29
+        object CambiarPass: TMenuItem
+          Caption = 'Cambiar Contrase'#241'a'
+          ImageIndex = 33
+        end
+        object AdministradordeUsuarios: TMenuItem
+          Caption = 'Administrador de Usuarios'
+          ImageIndex = 25
+        end
+      end
+      object N2: TMenuItem
+        Caption = '-'
+        GroupIndex = 2
+      end
+      object CambiarUsuario: TMenuItem
+        Caption = 'Cambiar Usuario'
+        GroupIndex = 2
+        ImageIndex = 8
+      end
+      object About: TMenuItem
+        Break = mbBarBreak
+        Caption = 'About LACVCruz'
+        GroupIndex = 2
+        ImageIndex = 23
+      end
+    end
+  end
+end

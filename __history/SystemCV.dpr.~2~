@@ -1,0 +1,16 @@
+program SystemCV;
+
+uses
+  Vcl.Forms,
+  HomeFrm in 'HomeFrm.pas' {FrmHome},
+  Modulo_Global in 'Modulo_Global.pas' {ModuloGlobal: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmHome, FrmHome);
+  Application.CreateForm(TModuloGlobal, ModuloGlobal);
+  Application.Run;
+end.

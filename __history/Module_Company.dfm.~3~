@@ -1,0 +1,238 @@
+object ModuleCompany: TModuleCompany
+  OldCreateOrder = False
+  Height = 251
+  Width = 296
+  object QCompany: TUniQuery
+    Connection = ModuleGlobal.UConex
+    SQL.Strings = (
+      'select * from company')
+    Left = 32
+    Top = 11
+    object QCompanyId_Bascula: TIntegerField
+      AutoGenerateValue = arAutoInc
+      FieldName = 'Id_Bascula'
+    end
+    object QCompanyEstado_B: TBooleanField
+      FieldName = 'Estado_B'
+      Required = True
+    end
+    object QCompanyNTiquete: TStringField
+      FieldName = 'NTiquete'
+      Required = True
+      Size = 11
+    end
+    object QCompanyFecha_I: TDateField
+      FieldName = 'Fecha_I'
+      Required = True
+    end
+    object QCompanyHora_I: TTimeField
+      FieldName = 'Hora_I'
+      Required = True
+    end
+    object QCompanyPeso_I: TFloatField
+      FieldName = 'Peso_I'
+      Required = True
+      DisplayFormat = '###,###,###,##0.00 Kls;- ###,###,###,##0.00 Kls;0 Kls'
+    end
+    object QCompanyFecha_F: TDateField
+      FieldName = 'Fecha_F'
+      Required = True
+    end
+    object QCompanyHora_F: TTimeField
+      FieldName = 'Hora_F'
+      Required = True
+    end
+    object QCompanyPeso_F: TFloatField
+      FieldName = 'Peso_F'
+      Required = True
+      DisplayFormat = '###,###,###,##0.00 Kls;- ###,###,###,##0.00 Kls;0 Kls'
+    end
+    object QCompanyServicio: TIntegerField
+      FieldName = 'Servicio'
+      Required = True
+    end
+    object QCompanyN_Viaje: TIntegerField
+      FieldName = 'N_Viaje'
+      Required = True
+    end
+    object QCompanyVariedad: TStringField
+      FieldName = 'Variedad'
+      Required = True
+      Size = 60
+    end
+    object QCompanyLote: TStringField
+      FieldName = 'Lote'
+      Required = True
+      Size = 60
+    end
+    object QCompanyHumeda: TFloatField
+      FieldName = 'Humeda'
+      Required = True
+    end
+    object QCompanyImpureza: TFloatField
+      FieldName = 'Impureza'
+      Required = True
+    end
+    object QCompanyProcedencia: TStringField
+      FieldName = 'Procedencia'
+      Required = True
+      Size = 60
+    end
+    object QCompanyN_Documento: TStringField
+      FieldName = 'N_Documento'
+      Required = True
+      Size = 60
+    end
+    object QCompanyOrigen: TStringField
+      FieldName = 'Origen'
+      Required = True
+      Size = 60
+    end
+    object QCompanyDestino: TStringField
+      FieldName = 'Destino'
+      Required = True
+      Size = 60
+    end
+    object QCompanyObservacion: TStringField
+      FieldName = 'Observacion'
+      Required = True
+      Size = 120
+    end
+    object QCompanyTarifa: TFloatField
+      FieldName = 'Tarifa'
+      Required = True
+    end
+    object QCompanyFHi: TStringField
+      FieldName = 'FHi'
+      ReadOnly = True
+      Required = True
+      Size = 23
+    end
+    object QCompanyFHf: TStringField
+      FieldName = 'FHf'
+      ReadOnly = True
+      Required = True
+      Size = 23
+    end
+    object QCompanyAnulado: TBooleanField
+      FieldName = 'Anulado'
+      Required = True
+    end
+    object QCompanyId_VC: TIntegerField
+      FieldName = 'Id_VC'
+      Required = True
+    end
+    object QCompanyIdentificacionC: TStringField
+      FieldName = 'IdentificacionC'
+      ReadOnly = True
+      Required = True
+    end
+    object QCompanyNombreC: TStringField
+      FieldName = 'NombreC'
+      ReadOnly = True
+      Required = True
+      Size = 60
+    end
+    object QCompanyNombresCt: TStringField
+      FieldName = 'NombresCt'
+      ReadOnly = True
+      Required = True
+      Size = 100
+    end
+    object QCompanyIdentificacionCt: TStringField
+      FieldName = 'IdentificacionCt'
+      ReadOnly = True
+      Required = True
+      Size = 16
+    end
+    object QCompanyPlaca: TStringField
+      FieldName = 'Placa'
+      ReadOnly = True
+      Required = True
+      Size = 10
+    end
+    object QCompanyDifE: TFloatField
+      FieldName = 'DifE'
+      ReadOnly = True
+      Required = True
+      DisplayFormat = '###,###,###,##0.00 Kls;- ###,###,###,##0.00 Kls;0 Kls'
+    end
+    object QCompanyDifS: TFloatField
+      FieldName = 'DifS'
+      ReadOnly = True
+      Required = True
+      DisplayFormat = '###,###,###,##0.00 Kls;- ###,###,###,##0.00 Kls;0 Kls'
+    end
+    object QCompanyId_Mov: TIntegerField
+      AutoGenerateValue = arAutoInc
+      FieldName = 'Id_Mov'
+      ReadOnly = True
+    end
+    object QCompanyVPeso2: TBooleanField
+      FieldName = 'VPeso2'
+      Required = True
+    end
+    object QCompanyId_Cliente: TIntegerField
+      FieldName = 'Id_Cliente'
+      ReadOnly = True
+    end
+    object QCompanyNombres: TStringField
+      FieldName = 'Nombres'
+      ReadOnly = True
+      Required = True
+      Size = 60
+    end
+    object QCompanyApellidos: TStringField
+      FieldName = 'Apellidos'
+      ReadOnly = True
+      Required = True
+      Size = 60
+    end
+    object QCompanyCiudad: TStringField
+      FieldName = 'Ciudad'
+      ReadOnly = True
+      Required = True
+      Size = 65
+    end
+    object QCompanyDepartamento: TStringField
+      FieldName = 'Departamento'
+      ReadOnly = True
+      Required = True
+      Size = 65
+    end
+    object QCompanyId_Ciudad: TIntegerField
+      FieldName = 'Id_Ciudad'
+      ReadOnly = True
+      Required = True
+    end
+    object QCompanyIdPerFac: TIntegerField
+      FieldName = 'IdPerFac'
+      Required = True
+    end
+    object QCompanyEstadoFac: TBooleanField
+      FieldName = 'EstadoFac'
+      Required = True
+    end
+    object QCompanyFNombreC: TStringField
+      FieldName = 'FNombreC'
+      ReadOnly = True
+      Required = True
+      Size = 120
+    end
+    object QCompanyFIdentificacionC: TStringField
+      FieldName = 'FIdentificacionC'
+      ReadOnly = True
+      Required = True
+      Size = 60
+    end
+    object QCompanyIdPLiq: TIntegerField
+      FieldName = 'IdPLiq'
+      Required = True
+    end
+  end
+  object DSCompany: TDataSource
+    DataSet = QCompany
+    Left = 32
+    Top = 67
+  end
+end

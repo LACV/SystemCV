@@ -1,0 +1,72 @@
+unit Module_Company;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DB, MemDS, DBAccess, Uni;
+
+type
+  TModuleCompany = class(TDataModule)
+    QueryBascula: TUniQuery;
+    QueryBasculaId_Bascula: TIntegerField;
+    QueryBasculaEstado_B: TBooleanField;
+    QueryBasculaNTiquete: TStringField;
+    QueryBasculaFecha_I: TDateField;
+    QueryBasculaHora_I: TTimeField;
+    QueryBasculaPeso_I: TFloatField;
+    QueryBasculaFecha_F: TDateField;
+    QueryBasculaHora_F: TTimeField;
+    QueryBasculaPeso_F: TFloatField;
+    QueryBasculaServicio: TIntegerField;
+    QueryBasculaN_Viaje: TIntegerField;
+    QueryBasculaVariedad: TStringField;
+    QueryBasculaLote: TStringField;
+    QueryBasculaHumeda: TFloatField;
+    QueryBasculaImpureza: TFloatField;
+    QueryBasculaProcedencia: TStringField;
+    QueryBasculaN_Documento: TStringField;
+    QueryBasculaOrigen: TStringField;
+    QueryBasculaDestino: TStringField;
+    QueryBasculaObservacion: TStringField;
+    QueryBasculaTarifa: TFloatField;
+    QueryBasculaFHi: TStringField;
+    QueryBasculaFHf: TStringField;
+    QueryBasculaAnulado: TBooleanField;
+    QueryBasculaId_VC: TIntegerField;
+    QueryBasculaIdentificacionC: TStringField;
+    QueryBasculaNombreC: TStringField;
+    QueryBasculaNombresCt: TStringField;
+    QueryBasculaIdentificacionCt: TStringField;
+    QueryBasculaPlaca: TStringField;
+    QueryBasculaDifE: TFloatField;
+    QueryBasculaDifS: TFloatField;
+    QueryBasculaId_Mov: TIntegerField;
+    QueryBasculaVPeso2: TBooleanField;
+    QueryBasculaId_Cliente: TIntegerField;
+    QueryBasculaNombres: TStringField;
+    QueryBasculaApellidos: TStringField;
+    QueryBasculaCiudad: TStringField;
+    QueryBasculaDepartamento: TStringField;
+    QueryBasculaId_Ciudad: TIntegerField;
+    QueryBasculaIdPerFac: TIntegerField;
+    QueryBasculaEstadoFac: TBooleanField;
+    QueryBasculaFNombreC: TStringField;
+    QueryBasculaFIdentificacionC: TStringField;
+    QueryBasculaIdPLiq: TIntegerField;
+    UDSBascula: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  ModuleCompany: TModuleCompany;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

@@ -1,0 +1,74 @@
+unit Module_Company;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DB, MemDS, DBAccess, Uni;
+
+type
+  TModuleCompany = class(TDataModule)
+    QCompany: TUniQuery;
+    QCompanyId_Bascula: TIntegerField;
+    QCompanyEstado_B: TBooleanField;
+    QCompanyNTiquete: TStringField;
+    QCompanyFecha_I: TDateField;
+    QCompanyHora_I: TTimeField;
+    QCompanyPeso_I: TFloatField;
+    QCompanyFecha_F: TDateField;
+    QCompanyHora_F: TTimeField;
+    QCompanyPeso_F: TFloatField;
+    QCompanyServicio: TIntegerField;
+    QCompanyN_Viaje: TIntegerField;
+    QCompanyVariedad: TStringField;
+    QCompanyLote: TStringField;
+    QCompanyHumeda: TFloatField;
+    QCompanyImpureza: TFloatField;
+    QCompanyProcedencia: TStringField;
+    QCompanyN_Documento: TStringField;
+    QCompanyOrigen: TStringField;
+    QCompanyDestino: TStringField;
+    QCompanyObservacion: TStringField;
+    QCompanyTarifa: TFloatField;
+    QCompanyFHi: TStringField;
+    QCompanyFHf: TStringField;
+    QCompanyAnulado: TBooleanField;
+    QCompanyId_VC: TIntegerField;
+    QCompanyIdentificacionC: TStringField;
+    QCompanyNombreC: TStringField;
+    QCompanyNombresCt: TStringField;
+    QCompanyIdentificacionCt: TStringField;
+    QCompanyPlaca: TStringField;
+    QCompanyDifE: TFloatField;
+    QCompanyDifS: TFloatField;
+    QCompanyId_Mov: TIntegerField;
+    QCompanyVPeso2: TBooleanField;
+    QCompanyId_Cliente: TIntegerField;
+    QCompanyNombres: TStringField;
+    QCompanyApellidos: TStringField;
+    QCompanyCiudad: TStringField;
+    QCompanyDepartamento: TStringField;
+    QCompanyId_Ciudad: TIntegerField;
+    QCompanyIdPerFac: TIntegerField;
+    QCompanyEstadoFac: TBooleanField;
+    QCompanyFNombreC: TStringField;
+    QCompanyFIdentificacionC: TStringField;
+    QCompanyIdPLiq: TIntegerField;
+    DSCompany: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  ModuleCompany: TModuleCompany;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses Module_Global;
+
+{$R *.dfm}
+
+end.

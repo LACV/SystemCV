@@ -1,0 +1,151 @@
+﻿unit Frm_Company;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFrmCompany = class(TForm)
+    DBGView: TDBGrid;
+    PnCabezal: TPanel;
+    Separador: TImage;
+    LbBuscar: TLabel;
+    separador2: TImage;
+    BtnNew: TButton;
+    EdBuscar: TEdit;
+    BtnEdit: TButton;
+    PnCrud: TPanel;
+    Label2: TLabel;
+    Label5: TLabel;
+    Label10: TLabel;
+    Label1: TLabel;
+    EdtId: TEdit;
+    EdtName: TEdit;
+    BtnSave: TButton;
+    BtnCancel: TButton;
+    EdtCod: TEdit;
+    procedure BtnNewClick(Sender: TObject);
+    procedure BtnCancelClick(Sender: TObject);
+    procedure BtnEditClick(Sender: TObject);
+    procedure BtnSaveClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure EdBuscarChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmCompany: TFrmCompany;
+
+implementation
+
+{$R *.dfm}
+
+uses Module_Company, Module_Global;
+
+{ TFrmCompany }
+
+procedure TFrmCompany.BtnNewClick(Sender: TObject);
+begin
+  ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit, BtnNew, Self);
+end;
+
+procedure TFrmCompany.BtnCancelClick(Sender: TObject);
+begin
+  ModuleGlobal.activateDeactivate(false, PnCrud, DBGView, BtnEdit,
+    BtnNew, Self);
+end;
+
+procedure TFrmCompany.BtnEditClick(Sender: TObject);
+begin
+  with ModuleCompany.QCompany do
+  begin
+    if recordcount > 0 then
+    begin
+      EdtCod.Text := FieldByName('idCompany').AsString;
+      EdtId.Text := FieldByName('Nit').AsString;
+      EdtName.Text := FieldByName('Company').AsString;
+
+      ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit,
+        BtnNew, Self);
+    end;
+
+  end;
+end;
+
+procedure TFrmCompany.BtnSaveClick(Sender: TObject);
+var
+  Fields, Values: TStringList;
+  results: boolean;
+  table, idTable: string;
+begin
+  if (EdtId.Text = '') and (EdtName.Text = '') then
+  begin
+    ShowMessage('Los Campos con (*) son Obligatorios.');
+  end
+  else
+  begin
+    // we group the fields and values for the query
+    Fields := TStringList.Create;
+    Values := TStringList.Create;
+
+    table := 'company';
+    idTable := 'idCompany';
+
+    Fields.Add('Company');
+    Fields.Add('Nit');
+
+    Values.Add(EdtName.Text);
+    Values.Add(EdtId.Text);
+
+    with ModuleGlobal do
+    begin
+      case EdtCod.Text = '' of
+        true:
+          begin
+            // New data
+            results := insertUpdateData(Fields, Values, table, '', '');
+          end;
+        false:
+          begin
+            // Edit data
+            results := insertUpdateData(Fields, Values, table,
+              EdtCod.Text, idTable);
+          end;
+      end;
+
+      case results of
+        true:
+          ShowMessage('Success Saving Record.');
+        false:
+          ShowMessage('¡ Mistake ! Unexpected.');
+      end;
+
+      ModuleCompany.resetCompany();
+      activateDeactivate(false, PnCrud, DBGView, BtnEdit, BtnNew, Self);
+    end;
+  end;
+end;
+
+procedure TFrmCompany.EdBuscarChange(Sender: TObject);
+begin
+  with ModuleCompany.QCompany do
+  begin
+    FilterOptions := [foCaseInsensitive];
+    Filter := 'Lote like ' + QuotedStr('%' + EdBuscar.Text + '%');
+    Filtered := true;
+  end;
+end;
+
+procedure TFrmCompany.FormActivate(Sender: TObject);
+begin
+  ModuleCompany.resetCompany();
+end;
+
+end.

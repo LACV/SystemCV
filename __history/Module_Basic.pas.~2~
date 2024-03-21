@@ -1,0 +1,41 @@
+unit Module_Basic;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DB, MemDS, DBAccess, Uni;
+
+type
+  TModuleCompany = class(TDataModule)
+    QCompany: TUniQuery;
+    DSCompany: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    function resetCompany(): string;
+  end;
+
+var
+  ModuleCompany: TModuleCompany;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses Module_Global;
+
+{$R *.dfm}
+{ TModuleCompany }
+
+function TModuleCompany.resetCompany: string;
+begin
+  with QCompany do
+  begin
+    Active := false;
+    Active := true;
+    Result := IntToStr(recordcount);
+  end;
+end;
+
+end.
