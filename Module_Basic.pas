@@ -17,6 +17,8 @@ type
     DSAFP: TDataSource;
     QCCF: TUniQuery;
     DSCCF: TDataSource;
+    QCity: TUniQuery;
+    DSCity: TDataSource;
   private
     { Private declarations }
   public
@@ -26,6 +28,7 @@ type
     function resetARl(): string;
     function resetAFP(): string;
     function resetCCF(): string;
+    function resetCity(): string;
   end;
 
 var
@@ -73,6 +76,16 @@ end;
 function TModuleBasic.resetCCF: string;
 begin
   with QCCF do
+  begin
+    Active := false;
+    Active := true;
+    Result := IntToStr(recordcount);
+  end;
+end;
+
+function TModuleBasic.resetCity: string;
+begin
+  with QCity do
   begin
     Active := false;
     Active := true;

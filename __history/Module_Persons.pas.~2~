@@ -1,0 +1,27 @@
+unit Module_Persons;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DB, MemDS, DBAccess, Uni;
+
+type
+  TModulePersons = class(TDataModule)
+    QPersons: TUniQuery;
+    DSPersons: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  ModulePersons: TModulePersons;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

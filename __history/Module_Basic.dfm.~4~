@@ -1,0 +1,89 @@
+object ModuleBasic: TModuleBasic
+  OldCreateOrder = False
+  Height = 251
+  Width = 387
+  object QCompany: TUniQuery
+    SQLInsert.Strings = (
+      '')
+    Connection = ModuleGlobal.UConex
+    SQL.Strings = (
+      'select * from company')
+    Left = 32
+    Top = 11
+  end
+  object DSCompany: TDataSource
+    DataSet = QCompany
+    Left = 32
+    Top = 67
+  end
+  object QEPS: TUniQuery
+    SQLInsert.Strings = (
+      '')
+    Connection = ModuleGlobal.UConex
+    SQL.Strings = (
+      'select * from eps')
+    Left = 96
+    Top = 11
+  end
+  object DSEPS: TDataSource
+    DataSet = QEPS
+    Left = 96
+    Top = 67
+  end
+  object QARL: TUniQuery
+    SQLInsert.Strings = (
+      '')
+    Connection = ModuleGlobal.UConex
+    SQL.Strings = (
+      'select * from arl')
+    Left = 168
+    Top = 11
+  end
+  object DSARL: TDataSource
+    DataSet = QARL
+    Left = 168
+    Top = 67
+  end
+  object QAFP: TUniQuery
+    SQLInsert.Strings = (
+      '')
+    Connection = ModuleGlobal.UConex
+    SQL.Strings = (
+      'select * from afp')
+    Left = 240
+    Top = 11
+  end
+  object DSAFP: TDataSource
+    DataSet = QAFP
+    Left = 240
+    Top = 67
+  end
+  object QCCF: TUniQuery
+    SQLInsert.Strings = (
+      '')
+    Connection = ModuleGlobal.UConex
+    SQL.Strings = (
+      'select * from ccf')
+    Left = 312
+    Top = 11
+  end
+  object DSCCF: TDataSource
+    DataSet = QCCF
+    Left = 312
+    Top = 67
+  end
+  object QCity: TUniQuery
+    SQLInsert.Strings = (
+      '')
+    Connection = ModuleGlobal.UConex
+    SQL.Strings = (
+      'select * from city')
+    Left = 32
+    Top = 123
+  end
+  object DSCity: TDataSource
+    DataSet = QCity
+    Left = 32
+    Top = 179
+  end
+end

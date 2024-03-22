@@ -72,4 +72,18 @@ object ModuleBasic: TModuleBasic
     Left = 312
     Top = 67
   end
+  object QCity: TUniQuery
+    SQLInsert.Strings = (
+      '')
+    Connection = ModuleGlobal.UConex
+    SQL.Strings = (
+      'select * from citys')
+    Left = 32
+    Top = 123
+  end
+  object DSCity: TDataSource
+    DataSet = QCity
+    Left = 32
+    Top = 179
+  end
 end

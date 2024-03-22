@@ -19,10 +19,10 @@ object FrmPerson: TFrmPerson
   object DBGView: TDBGrid
     Left = 0
     Top = 73
-    Width = 1018
-    Height = 47
-    Align = alClient
-    DataSource = ModuleBasic.DSCompany
+    Width = 405
+    Height = 519
+    Align = alLeft
+    DataSource = ModulePersons.DSPersons
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -39,7 +39,7 @@ object FrmPerson: TFrmPerson
     Columns = <
       item
         Expanded = False
-        FieldName = 'Nit'
+        FieldName = 'identification'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -53,12 +53,12 @@ object FrmPerson: TFrmPerson
         Title.Font.Height = -15
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold]
-        Width = 219
+        Width = 138
         Visible = True
       end
       item
         Expanded = False
-        FieldName = 'Company'
+        FieldName = 'NameComplete'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -71,7 +71,7 @@ object FrmPerson: TFrmPerson
         Title.Font.Height = -15
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold]
-        Width = 404
+        Width = 215
         Visible = True
       end>
   end
@@ -1263,6 +1263,7 @@ object FrmPerson: TFrmPerson
       ParentShowHint = False
       ShowHint = False
       TabOrder = 0
+      OnClick = BtnNewClick
     end
     object EdtBuscar: TEdit
       Left = 325
@@ -1309,9 +1310,9 @@ object FrmPerson: TFrmPerson
   end
   object PnCrud: TPanel
     Left = 0
-    Top = 120
+    Top = 592
     Width = 1018
-    Height = 541
+    Height = 69
     Align = alBottom
     Locked = True
     ParentShowHint = False
@@ -1324,7 +1325,7 @@ object FrmPerson: TFrmPerson
       Left = 1
       Top = 1
       Width = 879
-      Height = 539
+      Height = 67
       Align = alClient
       Padding.Left = 10
       Padding.Right = 10
@@ -1335,7 +1336,7 @@ object FrmPerson: TFrmPerson
         Left = 11
         Top = 299
         Width = 857
-        Height = 135
+        Height = 152
         Align = alTop
         Caption = 'DETALLES PERSONALES Y RESIDENCIALES'
         Ctl3D = True
@@ -1353,27 +1354,12 @@ object FrmPerson: TFrmPerson
         ParentDoubleBuffered = False
         ParentFont = False
         TabOrder = 3
-        ExplicitLeft = 16
-        ExplicitTop = 294
         object Label1: TLabel
           Left = 26
           Top = 25
           Width = 166
           Height = 18
           Caption = 'Ciudad De Residencia:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-        end
-        object Label2: TLabel
-          Left = 430
-          Top = 26
-          Width = 112
-          Height = 18
-          Caption = #191'Casa Propia?:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
@@ -1395,7 +1381,7 @@ object FrmPerson: TFrmPerson
           ParentFont = False
         end
         object Label7: TLabel
-          Left = 598
+          Left = 595
           Top = 25
           Width = 24
           Height = 18
@@ -1434,8 +1420,8 @@ object FrmPerson: TFrmPerson
           ParentFont = False
         end
         object Label18: TLabel
-          Left = 628
-          Top = 20
+          Left = 429
+          Top = 26
           Width = 78
           Height = 18
           Caption = 'N'#176' Celular'
@@ -1447,8 +1433,8 @@ object FrmPerson: TFrmPerson
           ParentFont = False
         end
         object Label23: TLabel
-          Left = 797
-          Top = 20
+          Left = 726
+          Top = 44
           Width = 24
           Height = 18
           Caption = '(*)'
@@ -1460,8 +1446,8 @@ object FrmPerson: TFrmPerson
           ParentFont = False
         end
         object Label43: TLabel
-          Left = 31
-          Top = 79
+          Left = 29
+          Top = 84
           Width = 158
           Height = 18
           Caption = 'Nivel de Escolaridad:'
@@ -1474,7 +1460,7 @@ object FrmPerson: TFrmPerson
         end
         object Label44: TLabel
           Left = 195
-          Top = 78
+          Top = 83
           Width = 24
           Height = 18
           Caption = '(*)'
@@ -1486,11 +1472,11 @@ object FrmPerson: TFrmPerson
           ParentFont = False
         end
         object Label13: TLabel
-          Left = 232
-          Top = 79
-          Width = 158
+          Left = 230
+          Top = 83
+          Width = 98
           Height = 18
-          Caption = 'Nivel de Escolaridad:'
+          Caption = 'Estado Cilvil:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
@@ -1500,7 +1486,7 @@ object FrmPerson: TFrmPerson
         end
         object Label14: TLabel
           Left = 396
-          Top = 78
+          Top = 83
           Width = 24
           Height = 18
           Caption = '(*)'
@@ -1511,10 +1497,49 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object EdtBlancura: TEdit
-          Left = 25
+        object Label2: TLabel
+          Left = 596
+          Top = 105
+          Width = 24
+          Height = 18
+          Caption = '(*)'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 3556340
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label16: TLabel
+          Left = 643
+          Top = 83
+          Width = 108
+          Height = 18
+          Caption = 'N'#176' de Licencia'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label17: TLabel
+          Left = 809
+          Top = 82
+          Width = 24
+          Height = 18
+          Caption = '(*)'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 3556340
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object EdtCityResidence: TEdit
+          Left = 26
           Top = 49
-          Width = 180
+          Width = 140
           Height = 24
           CharCase = ecUpperCase
           Font.Charset = DEFAULT_CHARSET
@@ -1524,24 +1549,9 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
-          TextHint = 'Digitar Blancura %'
+          TextHint = 'Digitar Ciudad de Residencia'
         end
-        object EdtPulimiento: TEdit
-          Left = 429
-          Top = 49
-          Width = 180
-          Height = 24
-          CharCase = ecUpperCase
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 2
-          TextHint = 'Digitar Pulimento'
-        end
-        object EdtRendimientoPilada: TEdit
+        object EdtResidenceAddress: TEdit
           Left = 227
           Top = 49
           Width = 180
@@ -1556,9 +1566,9 @@ object FrmPerson: TFrmPerson
           TabOrder = 1
           TextHint = 'Digitar Rendimiento de Pilada'
         end
-        object EdtGranoPartidoBlanco: TEdit
-          Left = 628
-          Top = 44
+        object EdtNPhone: TEdit
+          Left = 429
+          Top = 49
           Width = 180
           Height = 24
           CharCase = ecUpperCase
@@ -1568,16 +1578,41 @@ object FrmPerson: TFrmPerson
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 3
-          TextHint = 'Digitar Grano Partido %'
+          TabOrder = 2
+          TextHint = 'Digitar N'#176' Celular'
         end
-        object EdtIp: TEdit
-          Left = 26
-          Top = 102
+        object BtnCityResidenceList: TButton
+          AlignWithMargins = True
+          Left = 166
+          Top = 42
+          Width = 38
+          Height = 37
+          Margins.Left = 25
+          Margins.Top = 12
+          Margins.Bottom = 12
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ImageIndex = 0
+          ImageMargins.Left = 2
+          Images = ModuleGlobal.ImgL32x32
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = False
+          TabOrder = 3
+          OnClick = BtnCityResidenceListClick
+        end
+        object CbEducationLevel: TComboBox
+          Left = 27
+          Top = 107
           Width = 180
-          Height = 24
+          Height = 22
+          Cursor = crHandPoint
+          AutoCloseUp = True
+          Style = csOwnerDrawVariable
           CharCase = ecUpperCase
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1585,11 +1620,88 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 4
-          TextHint = 'Digitar IP'
+          TextHint = 'Seleccionar...'
+          Items.Strings = (
+            'SIN ESCOLARIDAD'
+            'EDUCACI'#211'N PRIMARIA INCOMPLETA'
+            'EDUCACI'#211'N PRIMARIA COMPLETA'
+            'EDUCACI'#211'N SECUNDARIA INCOMPLETA'
+            'EDUCACI'#211'N SECUNDARIA COMPLETA'
+            'EDUCACI'#211'N MEDIA O BACHILLERATO INCOMPLETO'
+            'EDUCACI'#211'N MEDIA O BACHILLERATO COMPLETO'
+            'ESTUDIOS T'#201'CNICOS O PROFESIONALES INCOMPLETOS'
+            'ESTUDIOS T'#201'CNICOS O PROFESIONALES COMPLETOS'
+            'ESTUDIOS UNIVERSITARIOS INCOMPLETOS'
+            'ESTUDIOS UNIVERSITARIOS COMPLETOS'
+            'POSTGRADO O ESPECIALIZACI'#211'N'
+            'MAESTR'#205'A'
+            'DOCTORADO')
         end
-        object Edit5: TEdit
-          Left = 227
-          Top = 102
+        object CbCivilStatus: TComboBox
+          Left = 228
+          Top = 107
+          Width = 180
+          Height = 22
+          Cursor = crHandPoint
+          AutoCloseUp = True
+          Style = csOwnerDrawVariable
+          CharCase = ecUpperCase
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 5
+          TextHint = 'Seleccionar...'
+          Items.Strings = (
+            'SOLTERO/A'
+            'CASADO/A'
+            'UNI'#211'N LIBRE'
+            'DIVORCIADO/A'
+            'VIUDO/A'
+            'SEPARADO/A'
+            'COMPROMETIDO/A'
+            'PAREJA DE HECHO')
+        end
+        object RbHose: TRadioGroup
+          Left = 643
+          Top = 20
+          Width = 129
+          Height = 62
+          Caption = #191'Casa Propia?'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Items.Strings = (
+            'Si'
+            'No')
+          ParentFont = False
+          TabOrder = 6
+        end
+        object RbConduccion: TRadioGroup
+          Left = 426
+          Top = 81
+          Width = 211
+          Height = 62
+          Caption = #191'Licencia de Conducci'#243'n?'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Items.Strings = (
+            'Si'
+            'No')
+          ParentFont = False
+          TabOrder = 7
+          OnClick = RbConduccionClick
+        end
+        object EdtNLicense: TEdit
+          Left = 643
+          Top = 106
           Width = 180
           Height = 24
           CharCase = ecUpperCase
@@ -1600,8 +1712,8 @@ object FrmPerson: TFrmPerson
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 5
-          TextHint = 'Digitar IP'
+          TabOrder = 8
+          TextHint = 'Digitar N'#176' Licencia'
         end
       end
       object GBBiologicas: TGroupBox
@@ -1632,6 +1744,8 @@ object FrmPerson: TFrmPerson
         ParentDoubleBuffered = False
         ParentFont = False
         TabOrder = 1
+        ExplicitLeft = 11
+        ExplicitTop = 135
         object Label3: TLabel
           Left = 26
           Top = 20
@@ -1710,13 +1824,28 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object EdtVariedad: TEdit
-          Left = 24
+        object LbAge: TLabel
+          Left = 26
+          Top = 44
+          Width = 145
+          Height = 16
+          Caption = '0 A'#241'os 0 Meses 0 Dias'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 6329856
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object CBGender: TComboBox
+          Left = 224
           Top = 43
           Width = 180
-          Height = 24
+          Height = 22
+          Cursor = crHandPoint
+          AutoCloseUp = True
+          Style = csOwnerDrawVariable
           CharCase = ecUpperCase
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1724,13 +1853,20 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
-          TextHint = 'Digitar Variedad'
+          TextHint = 'Seleccionar...'
+          OnChange = CBGenderChange
+          Items.Strings = (
+            'MASCULINO'
+            'FEMENINO')
         end
-        object EdtOlor: TEdit
-          Left = 227
+        object CbBloodType: TComboBox
+          Left = 426
           Top = 43
           Width = 180
-          Height = 24
+          Height = 22
+          Cursor = crHandPoint
+          AutoCloseUp = True
+          Style = csOwnerDrawVariable
           CharCase = ecUpperCase
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1739,24 +1875,16 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 1
-          Text = 'NORMAL'
-          TextHint = 'Digitar Olor'
-        end
-        object EdtColor: TEdit
-          Left = 427
-          Top = 43
-          Width = 180
-          Height = 24
-          CharCase = ecUpperCase
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 2
-          Text = 'NORMAL'
-          TextHint = 'Digitar Color'
+          TextHint = 'Seleccionar...'
+          Items.Strings = (
+            'A+'
+            'A-'
+            'B+'
+            'B-'
+            'AB+'
+            'AB-'
+            'O+'
+            'O-')
         end
       end
       object GBInfBasic: TGroupBox
@@ -1900,19 +2028,6 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object Label54: TLabel
-          Left = 199
-          Top = 77
-          Width = 24
-          Height = 18
-          Caption = '(*)'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = 3556340
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-        end
         object Label55: TLabel
           Left = 431
           Top = 78
@@ -1992,13 +2107,38 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object EdtLote: TEdit
+        object Label54: TLabel
+          Left = 190
+          Top = 77
+          Width = 20
+          Height = 16
+          Caption = '(*)'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 3556340
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbBirthDate: TLabel
+          Left = 350
+          Top = 104
+          Width = 74
+          Height = 14
+          Caption = '0000-00-00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 6329856
+          Font.Height = -12
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object EdtName: TEdit
           Left = 29
           Top = 41
           Width = 180
           Height = 24
           CharCase = ecUpperCase
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -2008,13 +2148,12 @@ object FrmPerson: TFrmPerson
           TabOrder = 0
           TextHint = 'Digitar Nombre'
         end
-        object EdtProveedor: TEdit
+        object EdtPSurName: TEdit
           Left = 228
           Top = 41
           Width = 180
           Height = 24
           CharCase = ecUpperCase
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -2024,13 +2163,12 @@ object FrmPerson: TFrmPerson
           TabOrder = 1
           TextHint = 'Digitar Apellido'
         end
-        object EdtFecha: TEdit
+        object EdtSSuerName: TEdit
           Left = 427
           Top = 41
           Width = 180
           Height = 24
           CharCase = ecUpperCase
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -2040,7 +2178,7 @@ object FrmPerson: TFrmPerson
           TabOrder = 2
           TextHint = 'Digitar Apellido'
         end
-        object EdtPesoMuestra: TEdit
+        object EdtIdentification: TEdit
           Left = 629
           Top = 41
           Width = 180
@@ -2055,10 +2193,10 @@ object FrmPerson: TFrmPerson
           TabOrder = 3
           TextHint = 'Digitar Identificaci'#243'n'
         end
-        object Edit1: TEdit
+        object EdtExpedition: TEdit
           Left = 30
           Top = 101
-          Width = 180
+          Width = 140
           Height = 24
           CharCase = ecUpperCase
           Enabled = False
@@ -2071,10 +2209,10 @@ object FrmPerson: TFrmPerson
           TabOrder = 4
           TextHint = 'Digitar Lugar de Expedici'#243'n'
         end
-        object Edit2: TEdit
+        object EdtCityBirth: TEdit
           Left = 430
           Top = 101
-          Width = 180
+          Width = 140
           Height = 24
           CharCase = ecUpperCase
           Enabled = False
@@ -2084,10 +2222,10 @@ object FrmPerson: TFrmPerson
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 5
+          TabOrder = 9
           TextHint = 'Digitar Ciudad de Nacimiento'
         end
-        object Edit3: TEdit
+        object EdtDepartamentBirth: TEdit
           Left = 628
           Top = 102
           Width = 180
@@ -2100,29 +2238,110 @@ object FrmPerson: TFrmPerson
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 6
+          TabOrder = 11
           TextHint = 'Digitar Departamento de Nacimiento'
         end
-        object Edit4: TEdit
-          Left = 227
+        object BtnExpeditionList: TButton
+          AlignWithMargins = True
+          Left = 171
+          Top = 93
+          Width = 38
+          Height = 37
+          Margins.Left = 25
+          Margins.Top = 12
+          Margins.Bottom = 12
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ImageIndex = 0
+          ImageMargins.Left = 2
+          Images = ModuleGlobal.ImgL32x32
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = False
+          TabOrder = 5
+          OnClick = BtnExpeditionListClick
+        end
+        object BtnCityBirthList: TButton
+          AlignWithMargins = True
+          Left = 570
+          Top = 93
+          Width = 38
+          Height = 37
+          Margins.Left = 25
+          Margins.Top = 12
+          Margins.Bottom = 12
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ImageIndex = 0
+          ImageMargins.Left = 2
+          Images = ModuleGlobal.ImgL32x32
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = False
+          TabOrder = 10
+          OnClick = BtnCityBirthListClick
+        end
+        object EdtYear: TEdit
+          Left = 228
           Top = 101
-          Width = 180
+          Width = 35
           Height = 24
           CharCase = ecUpperCase
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
+          NumbersOnly = True
+          ParentFont = False
+          TabOrder = 6
+          TextHint = 'A'#241'o'
+          OnChange = EdtYearChange
+        end
+        object EdtMonth: TEdit
+          Left = 268
+          Top = 101
+          Width = 35
+          Height = 24
+          CharCase = ecUpperCase
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          NumbersOnly = True
           ParentFont = False
           TabOrder = 7
-          TextHint = 'Digitar Fecha de Nacimieto'
+          TextHint = 'Mes'
+          OnChange = EdtMonthChange
+        end
+        object EdtDay: TEdit
+          Left = 309
+          Top = 101
+          Width = 35
+          Height = 24
+          CharCase = ecUpperCase
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          NumbersOnly = True
+          ParentFont = False
+          TabOrder = 8
+          TextHint = 'Dia'
+          OnChange = EdtDayChange
         end
       end
       object GBEmergency: TGroupBox
         Left = 11
-        Top = 434
+        Top = 451
         Width = 857
         Height = 87
         Align = alTop
@@ -2142,6 +2361,8 @@ object FrmPerson: TFrmPerson
         ParentDoubleBuffered = False
         ParentFont = False
         TabOrder = 4
+        ExplicitLeft = 16
+        ExplicitTop = 440
         object Label24: TLabel
           Left = 396
           Top = 23
@@ -2220,7 +2441,7 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object EdtGranoDanado: TEdit
+        object EdtNPhoneE: TEdit
           Left = 227
           Top = 47
           Width = 180
@@ -2233,9 +2454,9 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 2
-          TextHint = 'Digitar Grano Da'#241'ado %'
+          TextHint = 'Digitar N'#176' Celular'
         end
-        object EdtGranoCentroBlanco: TEdit
+        object EdtAddressE: TEdit
           Left = 427
           Top = 47
           Width = 180
@@ -2248,9 +2469,9 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 1
-          TextHint = 'Digitar Grano Centro Blanco %'
+          TextHint = 'Digitar Grano Direccion de Emergencia'
         end
-        object EdtGranoYeso: TEdit
+        object EdtNamesSurNames: TEdit
           Left = 25
           Top = 49
           Width = 180
@@ -2263,7 +2484,7 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
-          TextHint = 'Digitar Grano Yesado %'
+          TextHint = 'Digitar Nombres y Apellidos'
         end
         object EdtGranoRojo: TEdit
           Left = 25
@@ -2291,6 +2512,7 @@ object FrmPerson: TFrmPerson
         Caption = 'INFORMACION DE SERVICIO MILITAR'
         Ctl3D = True
         DoubleBuffered = False
+        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
@@ -2308,8 +2530,8 @@ object FrmPerson: TFrmPerson
         ExplicitTop = 207
         ExplicitWidth = 994
         object Label19: TLabel
-          Left = 27
-          Top = 22
+          Left = 228
+          Top = 25
           Width = 137
           Height = 18
           Caption = 'N'#176' Libreta Militar:'
@@ -2321,8 +2543,8 @@ object FrmPerson: TFrmPerson
           ParentFont = False
         end
         object Label20: TLabel
-          Left = 194
-          Top = 22
+          Left = 395
+          Top = 25
           Width = 24
           Height = 18
           Caption = '(*)'
@@ -2334,8 +2556,8 @@ object FrmPerson: TFrmPerson
           ParentFont = False
         end
         object Label21: TLabel
-          Left = 224
-          Top = 22
+          Left = 24
+          Top = 25
           Width = 46
           Height = 18
           Caption = 'Clase:'
@@ -2347,8 +2569,8 @@ object FrmPerson: TFrmPerson
           ParentFont = False
         end
         object Label22: TLabel
-          Left = 396
-          Top = 22
+          Left = 193
+          Top = 25
           Width = 24
           Height = 18
           Caption = '(*)'
@@ -2385,9 +2607,9 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object EdtMezclaIM: TEdit
-          Left = 26
-          Top = 46
+        object EdtNMilitary: TEdit
+          Left = 223
+          Top = 49
           Width = 180
           Height = 24
           CharCase = ecUpperCase
@@ -2398,11 +2620,11 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
-          TextHint = 'Digitar Mezcla(Integral,Macho)'
+          TextHint = 'Digitar N'#176' Libreta Militar'
         end
-        object EdtBlancuraI: TEdit
-          Left = 228
-          Top = 46
+        object EdtmilitaryDistrict: TEdit
+          Left = 428
+          Top = 49
           Width = 180
           Height = 24
           CharCase = ecUpperCase
@@ -2413,13 +2635,16 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 1
-          TextHint = 'Digitar Blancura Integral'
+          TextHint = 'Digitar Distrito Militar'
         end
-        object EdtIntegralPartido: TEdit
-          Left = 428
-          Top = 46
+        object CbClassMilitary: TComboBox
+          Left = 25
+          Top = 49
           Width = 180
-          Height = 24
+          Height = 22
+          Cursor = crHandPoint
+          AutoCloseUp = True
+          Style = csOwnerDrawVariable
           CharCase = ecUpperCase
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2428,7 +2653,10 @@ object FrmPerson: TFrmPerson
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 2
-          TextHint = 'Digitar integral Partido %'
+          TextHint = 'Seleccionar...'
+          Items.Strings = (
+            'PRIMERA CLASE'
+            'SEGUNDA CLASE')
         end
       end
     end
@@ -2436,7 +2664,7 @@ object FrmPerson: TFrmPerson
       Left = 880
       Top = 1
       Width = 137
-      Height = 539
+      Height = 67
       Align = alRight
       Padding.Bottom = 3
       TabOrder = 1
@@ -2504,7 +2732,7 @@ object FrmPerson: TFrmPerson
       object BtnCancel: TButton
         AlignWithMargins = True
         Left = 4
-        Top = 478
+        Top = 6
         Width = 129
         Height = 54
         Align = alBottom
@@ -2516,7 +2744,7 @@ object FrmPerson: TFrmPerson
         Font.Style = [fsBold]
         ImageIndex = 4
         ImageMargins.Left = 2
-        Images = DModulo.ImgL32x32
+        Images = ModuleGlobal.ImgL32x32
         ModalResult = 8
         ParentFont = False
         ParentShowHint = False
@@ -2524,13 +2752,14 @@ object FrmPerson: TFrmPerson
         TabOrder = 0
         TabStop = False
         WordWrap = True
+        OnClick = BtnCancelClick
         ExplicitTop = 414
         ExplicitWidth = 131
       end
       object BtnSave: TButton
         AlignWithMargins = True
         Left = 4
-        Top = 418
+        Top = -54
         Width = 129
         Height = 54
         Align = alBottom
@@ -2542,19 +2771,20 @@ object FrmPerson: TFrmPerson
         Font.Style = [fsBold]
         ImageIndex = 5
         ImageMargins.Left = 2
-        Images = DModulo.ImgL32x32
+        Images = ModuleGlobal.ImgL32x32
         ParentFont = False
         ParentShowHint = False
         ShowHint = False
         TabOrder = 1
         TabStop = False
         WordWrap = True
-        ExplicitTop = 354
-        ExplicitWidth = 131
+        OnClick = BtnSaveClick
+        ExplicitLeft = 6
+        ExplicitTop = 418
       end
       object EdtCod: TEdit
         Left = 6
-        Top = 164
+        Top = 133
         Width = 80
         Height = 24
         Alignment = taRightJustify
@@ -2568,6 +2798,415 @@ object FrmPerson: TFrmPerson
         TabOrder = 2
         TextHint = 'Ingresar Codigo'
         Visible = False
+      end
+    end
+  end
+  object Panel1: TPanel
+    Left = 405
+    Top = 73
+    Width = 612
+    Height = 519
+    Align = alLeft
+    Padding.Bottom = 3
+    TabOrder = 3
+    object GroupBox1: TGroupBox
+      Left = 1
+      Top = 1
+      Width = 610
+      Height = 80
+      Align = alTop
+      Caption = 'INFORMACI'#211'N BASICA'
+      Ctl3D = True
+      DoubleBuffered = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      Padding.Left = 5
+      Padding.Top = 5
+      Padding.Right = 5
+      Padding.Bottom = 5
+      ParentCtl3D = False
+      ParentDoubleBuffered = False
+      ParentFont = False
+      TabOrder = 0
+      object Label38: TLabel
+        Left = 67
+        Top = 27
+        Width = 109
+        Height = 18
+        Caption = 'Identificac'#237'on:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label41: TLabel
+        Left = 798
+        Top = 19
+        Width = 24
+        Height = 18
+        Caption = '(*)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 3556340
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label42: TLabel
+        Left = 24
+        Top = 51
+        Width = 155
+        Height = 18
+        Caption = 'Lugar de Expedici'#243'n:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label45: TLabel
+        Left = 435
+        Top = 51
+        Width = 167
+        Height = 18
+        BiDiMode = bdRightToLeft
+        Caption = 'Ciudad de Nacimiento:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentBiDiMode = False
+        ParentFont = False
+      end
+      object Label63: TLabel
+        Left = 798
+        Top = 78
+        Width = 24
+        Height = 18
+        Caption = '(*)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 3556340
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label64: TLabel
+        Left = 434
+        Top = 27
+        Width = 160
+        Height = 18
+        BiDiMode = bdRightToLeft
+        Caption = 'Fecha de Nacimiento:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentBiDiMode = False
+        ParentFont = False
+      end
+      object Label67: TLabel
+        Left = 336
+        Top = 27
+        Width = 92
+        Height = 18
+        Caption = '0000-00-00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 6329856
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
+    object GroupBox2: TGroupBox
+      AlignWithMargins = True
+      Left = 4
+      Top = 218
+      Width = 604
+      Height = 70
+      Margins.Top = 1
+      Margins.Bottom = 1
+      Align = alTop
+      Caption = 'CARACTERISTICAS BIOLOGICAS'
+      Color = clBtnFace
+      Ctl3D = True
+      DoubleBuffered = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      Padding.Left = 5
+      Padding.Top = 5
+      Padding.Right = 5
+      Padding.Bottom = 5
+      ParentBackground = False
+      ParentColor = False
+      ParentCtl3D = False
+      ParentDoubleBuffered = False
+      ParentFont = False
+      TabOrder = 1
+      ExplicitLeft = 6
+      ExplicitTop = 85
+      object Label31: TLabel
+        Left = 26
+        Top = 20
+        Width = 41
+        Height = 18
+        Caption = 'Edad:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label33: TLabel
+        Left = 225
+        Top = 19
+        Width = 42
+        Height = 18
+        Caption = 'Sexo:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label36: TLabel
+        Left = 428
+        Top = 20
+        Width = 132
+        Height = 18
+        Caption = 'Grupo Sanguineo:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label61: TLabel
+        Left = 26
+        Top = 44
+        Width = 145
+        Height = 16
+        Caption = '0 A'#241'os 0 Meses 0 Dias'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 6329856
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
+    object GroupBox3: TGroupBox
+      Left = 1
+      Top = 289
+      Width = 610
+      Height = 78
+      Align = alTop
+      BiDiMode = bdLeftToRight
+      Caption = 'INFORMACION DE SERVICIO MILITAR'
+      Ctl3D = True
+      DoubleBuffered = False
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      Padding.Left = 5
+      Padding.Top = 5
+      Padding.Right = 5
+      Padding.Bottom = 5
+      ParentBiDiMode = False
+      ParentCtl3D = False
+      ParentDoubleBuffered = False
+      ParentFont = False
+      TabOrder = 2
+      ExplicitTop = 233
+      object Label62: TLabel
+        Left = 28
+        Top = 49
+        Width = 137
+        Height = 18
+        Caption = 'N'#176' Libreta Militar:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label66: TLabel
+        Left = 112
+        Top = 25
+        Width = 46
+        Height = 18
+        Caption = 'Clase:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label69: TLabel
+        Left = 469
+        Top = 23
+        Width = 116
+        Height = 18
+        Caption = 'Distrito Militar:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
+    object GroupBox4: TGroupBox
+      Left = 1
+      Top = 81
+      Width = 610
+      Height = 136
+      Align = alTop
+      Caption = 'DETALLES PERSONALES Y RESIDENCIALES'
+      Ctl3D = True
+      DoubleBuffered = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      Padding.Left = 5
+      Padding.Top = 5
+      Padding.Right = 5
+      Padding.Bottom = 5
+      ParentCtl3D = False
+      ParentDoubleBuffered = False
+      ParentFont = False
+      TabOrder = 3
+      object Label71: TLabel
+        Left = 10
+        Top = 105
+        Width = 166
+        Height = 18
+        Caption = 'Ciudad De Residencia:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label76: TLabel
+        Left = 93
+        Top = 33
+        Width = 83
+        Height = 18
+        Caption = 'N'#176' Celular:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label78: TLabel
+        Left = 21
+        Top = 81
+        Width = 158
+        Height = 18
+        Caption = 'Nivel de Escolaridad:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label80: TLabel
+        Left = 80
+        Top = 57
+        Width = 98
+        Height = 18
+        Caption = 'Estado Cilvil:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label83: TLabel
+        Left = 406
+        Top = 33
+        Width = 113
+        Height = 18
+        BiDiMode = bdRightToLeft
+        Caption = 'N'#176' de Licencia:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentBiDiMode = False
+        ParentFont = False
+      end
+      object Label84: TLabel
+        Left = 809
+        Top = 82
+        Width = 24
+        Height = 18
+        Caption = '(*)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 3556340
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label32: TLabel
+        Left = 406
+        Top = 57
+        Width = 112
+        Height = 18
+        BiDiMode = bdRightToLeft
+        Caption = #191'Casa Propia?:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentBiDiMode = False
+        ParentFont = False
+      end
+      object Label35: TLabel
+        Left = 406
+        Top = 81
+        Width = 196
+        Height = 18
+        BiDiMode = bdRightToLeft
+        Caption = #191'Licencia de Conducci'#243'n?:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentBiDiMode = False
+        ParentFont = False
       end
     end
   end

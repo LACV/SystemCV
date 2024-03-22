@@ -6,14 +6,13 @@ uses
   System.SysUtils, System.Classes, Data.DB, DBAccess, Uni, UniProvider,
   MySQLUniProvider, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList, Vcl.Controls,
   IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, MemDS,
-  Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls;
+  Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Forms;
 
 type
   TModuleGlobal = class(TDataModule)
     IdTCPClientServidor: TIdTCPClient;
     ImageList2: TImageList;
     ImageList1: TImageList;
-    ImgL32x32: TImageList;
     IconMensaje: TTrayIcon;
     ImgPrincipales32x32: TImageList;
     MySQLUniProvider1: TMySQLUniProvider;
@@ -21,14 +20,17 @@ type
     QFloating: TUniSQL;
     UDSRespuesta: TUniDataSource;
     QueryRespuesta: TUniQuery;
+    ImgL32x32: TImageList;
 
   private
     { Private declarations }
   public
     { Public declarations }
-    procedure activateDeactivate(state: boolean);
+    procedure activateDeactivate(state: Boolean; PnCrud: TPanel;
+      DBGView: TDBGrid; BtnEdit, BtnNew: TButton; Form: TForm);
+    procedure clearForm(Form: TForm);
     function insertUpdateData(fields, values: TStringList;
-      table, idCod, fieldWhere: string): boolean;
+      table, idCod, fieldWhere: string): Boolean;
 
   end;
 
@@ -41,7 +43,8 @@ implementation
 {$R *.dfm}
 { TModuleGlobal }
 
-procedure TModuleGlobal.activateDeactivate(state: boolean);
+procedure TModuleGlobal.activateDeactivate(state: Boolean; PnCrud: TPanel;
+  DBGView: TDBGrid; BtnEdit, BtnNew: TButton; Form: TForm);
 begin
   if state = true then
   begin
@@ -49,18 +52,33 @@ begin
     DBGView.Enabled := false;
     BtnEdit.Enabled := false;
     BtnNew.Enabled := false;
+
   end
   else
   begin
     PnCrud.Visible := false;
     DBGView.Enabled := true;
     BtnEdit.Enabled := true;
-    BtmNew.Enabled := true;
+    BtnNew.Enabled := true;
+    clearForm(Form);
+  end;
+end;
+
+procedure TModuleGlobal.clearForm(Form: TForm);
+var
+  i: Integer;
+begin
+  // Go through all the components of the form.
+  for i := 0 to Form.ComponentCount - 1 do
+  begin
+    // If the component is a TEdit, set its Text to empty
+    if Form.Components[i] is TEdit then
+      TEdit(Form.Components[i]).Text := '';
   end;
 end;
 
 function TModuleGlobal.insertUpdateData(fields, values: TStringList;
-  table, idCod, fieldWhere: string): boolean;
+  table, idCod, fieldWhere: string): Boolean;
 var
   fieldsList, valuesList, fieldsValuesList, sql_: string;
   i: Integer;

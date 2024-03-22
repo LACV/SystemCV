@@ -16,7 +16,7 @@ type
     LbBuscar: TLabel;
     separador2: TImage;
     BtnNew: TButton;
-    EdBuscar: TEdit;
+    EdtBuscar: TEdit;
     BtnEdit: TButton;
     PnCrud: TPanel;
     Label2: TLabel;
@@ -33,6 +33,7 @@ type
     procedure BtnEditClick(Sender: TObject);
     procedure BtnSaveClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure EdtBuscarChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,23 +47,24 @@ implementation
 
 {$R *.dfm}
 
-uses Module_Company, Module_Global;
+uses Module_Basic, Module_Global;
 
 { TFrmCompany }
 
 procedure TFrmCompany.BtnNewClick(Sender: TObject);
 begin
-  ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit, BtnNew);
+  ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit, BtnNew, Self);
 end;
 
 procedure TFrmCompany.BtnCancelClick(Sender: TObject);
 begin
-  ModuleGlobal.activateDeactivate(false, PnCrud, DBGView, BtnEdit, BtnNew);
+  ModuleGlobal.activateDeactivate(false, PnCrud, DBGView, BtnEdit,
+    BtnNew, Self);
 end;
 
 procedure TFrmCompany.BtnEditClick(Sender: TObject);
 begin
-  with ModuleCompany.QCompany do
+  with ModuleBasic.QCompany do
   begin
     if recordcount > 0 then
     begin
@@ -70,7 +72,8 @@ begin
       EdtId.Text := FieldByName('Nit').AsString;
       EdtName.Text := FieldByName('Company').AsString;
 
-      ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit, BtnNew);
+      ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit,
+        BtnNew, Self);
     end;
 
   end;
@@ -124,15 +127,27 @@ begin
           ShowMessage('¡ Mistake ! Unexpected.');
       end;
 
-      ModuleCompany.resetCompany();
-      activateDeactivate(false,PnCrud, DBGView, BtnEdit, BtnNew);
+      ModuleBasic.resetCompany();
+      activateDeactivate(false, PnCrud, DBGView, BtnEdit, BtnNew, Self);
     end;
+  end;
+end;
+
+procedure TFrmCompany.EdtBuscarChange(Sender: TObject);
+begin
+  with ModuleBasic.QCompany do
+  begin
+    FilterOptions := [foCaseInsensitive];
+    Filter := 'Company like ' + QuotedStr('%' + EdtBuscar.Text + '%') + ' or ' +
+      'Nit like ' + QuotedStr('%' + EdtBuscar.Text + '%');
+    Filtered := true;
   end;
 end;
 
 procedure TFrmCompany.FormActivate(Sender: TObject);
 begin
-  ModuleCompany.resetCompany();
+  ModuleBasic.resetCompany();
+  EdtBuscar.SetFocus();
 end;
 
 end.

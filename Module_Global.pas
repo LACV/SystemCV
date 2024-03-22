@@ -13,7 +13,6 @@ type
     IdTCPClientServidor: TIdTCPClient;
     ImageList2: TImageList;
     ImageList1: TImageList;
-    ImgL32x32: TImageList;
     IconMensaje: TTrayIcon;
     ImgPrincipales32x32: TImageList;
     MySQLUniProvider1: TMySQLUniProvider;
@@ -21,6 +20,7 @@ type
     QFloating: TUniSQL;
     UDSRespuesta: TUniDataSource;
     QueryRespuesta: TUniQuery;
+    ImgL32x32: TImageList;
 
   private
     { Private declarations }
@@ -66,7 +66,8 @@ end;
 
 procedure TModuleGlobal.clearForm(Form: TForm);
 var
-  i: Integer;
+  i,j: Integer;
+  RadioGroup:TRadioGroup;
 begin
   // Go through all the components of the form.
   for i := 0 to Form.ComponentCount - 1 do
@@ -74,6 +75,18 @@ begin
     // If the component is a TEdit, set its Text to empty
     if Form.Components[i] is TEdit then
       TEdit(Form.Components[i]).Text := '';
+
+    if Form.Components[i] is TComboBox then
+      TComboBox(Form.Components[i]).ItemIndex := -1;
+
+    if Form.Components[i] is TRadioGroup then
+    begin
+      RadioGroup := TRadioGroup(Form.Components[i]);
+      for j := 0 to RadioGroup.Items.Count - 1 do
+      begin
+        RadioGroup.Buttons[j].Checked := false;
+      end;
+    end;
   end;
 end;
 

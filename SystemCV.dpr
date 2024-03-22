@@ -11,7 +11,8 @@ uses
   Frm_AFP in 'Frm_AFP.pas' {FrmAFP},
   Frm_CCF in 'Frm_CCF.pas' {FrmCCF},
   Frm_Person in 'Frm_Person.pas' {FrmPerson},
-  Module_Persons in 'Module_Persons.pas' {ModulePersons: TDataModule};
+  Module_Persons in 'Module_Persons.pas' {ModulePersons: TDataModule},
+  Frm_City in 'Frm_City.pas' {FrmCitys};
 
 {$R *.res}
 
@@ -21,7 +22,6 @@ begin
   Application.CreateForm(TFrmHome, FrmHome);
   Application.CreateForm(TModuleGlobal, ModuleGlobal);
   Application.CreateForm(TModuleBasic, ModuleBasic);
-  Application.CreateForm(TFrmPerson, FrmPerson);
   Application.CreateForm(TModulePersons, ModulePersons);
   Application.Run;
 end.

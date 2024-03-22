@@ -1,0 +1,99 @@
+unit Frm_Ciudad;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.Imaging.pngimage, Vcl.ExtCtrls;
+
+type
+  TFrmCiudad = class(TForm)
+    PnCabezal: TPanel;
+    Separador: TImage;
+    LbBuscar: TLabel;
+    separador2: TImage;
+    EdBuscar: TEdit;
+    DBGVista: TDBGrid;
+    procedure DBGVistaDblClick(Sender: TObject);
+    procedure EdBuscarChange(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmCiudad: TFrmCiudad;
+
+implementation
+
+{$R *.dfm}
+
+uses D_modulo, D_ModuloT, Frm_Carta_Porte, Frm_Ventas_Crud, Frm_Formulario_G;
+
+procedure TFrmCiudad.DBGVistaDblClick(Sender: TObject);
+begin
+  // cargamos los datos al formulario
+  if Assigned(FrmVentasCrud) then
+  begin
+    with FrmVentasCrud do
+    begin
+      with DModulo.QueryCiudad do
+      begin
+        EdtCiudad.Text := FieldByName('Ciudad').AsString + '( ' +
+          FieldByName('Departamento').AsString + ' )';
+        EdtCodCiudad.Text := FieldByName('Id_Ciudad').AsString;
+      end;
+
+      FrmCiudad.Close;
+    end;
+  end
+  else if Assigned(FrmCartaPorte) then
+  begin
+    with FrmCartaPorte do
+    begin
+      with DModulo.QueryCiudad do
+      begin
+        EdtCiudad.Text := FieldByName('Ciudad').AsString + '( ' +
+          FieldByName('Departamento').AsString + ' )';
+        EdtCodCiudad.Text := FieldByName('Id_Ciudad').AsString;
+      end;
+
+      FrmCiudad.Close;
+    end
+  end
+  else if Assigned(FrmFormularioG) then
+  begin
+    with FrmFormularioG do
+    begin
+      with DModulo.QueryCiudad do
+      begin
+        EdtProcedencia.Text := FieldByName('Ciudad').AsString + '( ' +
+          FieldByName('Departamento').AsString + ' )';
+        EdtCodCiudad.Text := FieldByName('Id_Ciudad').AsString;
+      end;
+
+      FrmCiudad.Close;
+    end;
+  end;;
+end;
+
+procedure TFrmCiudad.EdBuscarChange(Sender: TObject);
+begin
+  with DModulo do
+  begin
+    QueryCiudad.FilterOptions := [foCaseInsensitive];
+    QueryCiudad.Filter := 'Ciudad like' + QuotedStr('%' + EdBuscar.Text + '%');
+    QueryCiudad.Filtered := True;
+  end;
+end;
+
+procedure TFrmCiudad.FormActivate(Sender: TObject);
+begin
+  EdBuscar.SetFocus;
+end;
+
+end.

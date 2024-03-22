@@ -85,7 +85,7 @@ var
   results: boolean;
   table, idTable: string;
 begin
-  if (EdtId.Text = '') and (EdtName.Text = '') then
+  if (EdtId.Text = '') or (EdtName.Text = '') then
   begin
     ShowMessage('Los Campos con (*) son Obligatorios.');
   end
