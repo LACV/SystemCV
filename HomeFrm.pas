@@ -47,7 +47,8 @@ implementation
 
 {$R *.dfm}
 
-uses Frm_Company, Frm_AFP, Frm_ARL, Frm_CCF, Frm_EPS, Frm_Person;
+uses Frm_Company, Frm_AFP, Frm_ARL, Frm_CCF, Frm_EPS, Frm_Person,
+  Form_PersonsInCare;
 
 procedure TFrmHome.MAFPClick(Sender: TObject);
 begin

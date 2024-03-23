@@ -34,6 +34,7 @@ type
     procedure BtnSaveClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure EdtBuscarChange(Sender: TObject);
+    procedure DBGViewDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -47,7 +48,7 @@ implementation
 
 {$R *.dfm}
 
-uses Module_Basic, Module_Global;
+uses Module_Basic, Module_Global, Frm_WorkHistory;
 
 { TFrmCompany }
 
@@ -131,6 +132,23 @@ begin
       activateDeactivate(false, PnCrud, DBGView, BtnEdit, BtnNew, Self);
     end;
   end;
+end;
+
+procedure TFrmCompany.DBGViewDblClick(Sender: TObject);
+begin
+  if Assigned(FrmWorkHistory) then
+  begin
+    with FrmWorkHistory do
+    begin
+      with ModuleBasic.QCompany do
+      begin
+        EdtCompany.Text := FieldByName('Company').AsString;
+        EdtCodCompany.Text := FieldByName('idCompany').AsString;
+        FrmCompany.Close;
+      end;
+    end;
+  end;
+
 end;
 
 procedure TFrmCompany.EdtBuscarChange(Sender: TObject);

@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, Data.DB, DBAccess, Uni, UniProvider,
   MySQLUniProvider, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList, Vcl.Controls,
   IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, MemDS,
-  Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Forms;
+  Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Forms, DateUtils;
 
 type
   TModuleGlobal = class(TDataModule)
@@ -31,6 +31,7 @@ type
     procedure clearForm(Form: TForm);
     function insertUpdateData(fields, values: TStringList;
       table, idCod, fieldWhere: string): Boolean;
+
 
   end;
 
@@ -66,8 +67,8 @@ end;
 
 procedure TModuleGlobal.clearForm(Form: TForm);
 var
-  i,j: Integer;
-  RadioGroup:TRadioGroup;
+  i, j: Integer;
+  RadioGroup: TRadioGroup;
 begin
   // Go through all the components of the form.
   for i := 0 to Form.ComponentCount - 1 do
@@ -159,5 +160,7 @@ begin
   end;
 
 end;
+
+
 
 end.

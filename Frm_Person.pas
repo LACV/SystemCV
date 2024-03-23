@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls,
-  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids, DateUtils;
+  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids, DateUtils,
+  Vcl.Mask, Vcl.DBCtrls;
 
 type
   TFrmPerson = class(TForm)
@@ -120,12 +121,9 @@ type
     Label45: TLabel;
     Label63: TLabel;
     Label64: TLabel;
-    Label67: TLabel;
     GroupBox2: TGroupBox;
-    Label31: TLabel;
     Label33: TLabel;
     Label36: TLabel;
-    Label61: TLabel;
     GroupBox3: TGroupBox;
     Label62: TLabel;
     Label66: TLabel;
@@ -138,7 +136,36 @@ type
     Label83: TLabel;
     Label84: TLabel;
     Label32: TLabel;
+    GroupBox5: TGroupBox;
+    Label65: TLabel;
+    Label70: TLabel;
+    Label72: TLabel;
+    Edit4: TEdit;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBEdit4: TDBEdit;
+    DBEdit5: TDBEdit;
+    DBEdit6: TDBEdit;
+    DBEdit7: TDBEdit;
+    DBEdit8: TDBEdit;
+    DBEdit9: TDBEdit;
+    DBEdit10: TDBEdit;
+    DBEdit13: TDBEdit;
+    DBEdit14: TDBEdit;
+    DBEdit15: TDBEdit;
+    DBEdit16: TDBEdit;
+    DBEdit17: TDBEdit;
+    DBEdit18: TDBEdit;
+    DBEdit19: TDBEdit;
+    DBEdit20: TDBEdit;
+    DBEdit1: TDBEdit;
+    dbName: TDBMemo;
+    DBEdit21: TDBEdit;
+    GroupBox6: TGroupBox;
     Label35: TLabel;
+    Label67: TLabel;
+    Button1: TButton;
+    Button3: TButton;
     procedure BtnNewClick(Sender: TObject);
     procedure BtnCancelClick(Sender: TObject);
     procedure BtnExpeditionListClick(Sender: TObject);
@@ -150,26 +177,37 @@ type
     procedure CBGenderChange(Sender: TObject);
     procedure BtnSaveClick(Sender: TObject);
     procedure RbConduccionClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure BtnEditClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure EdtBuscarChange(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     FLastButtonActivated: TButton;
     { Private declarations }
     procedure openCityList();
-    procedure updateDate();
     function DaysInMonth(const Year, Month: Word): Word;
+    procedure OpenPersonIncare(new: boolean);
   public
     { Public declarations }
     property LastButtonActivated: TButton read FLastButtonActivated
       write FLastButtonActivated;
+    procedure updateDate(_Year, _Month, _Day: string; out _date, _age: string);
+    function SplitString(const S: string; Delimiter: Char): TArray<string>;
   end;
 
 var
+  _date: string;
+  _age: string;
   FrmPerson: TFrmPerson;
 
 implementation
 
 {$R *.dfm}
 
-uses Module_Global, Frm_City, Module_Persons, Module_Basic;
+uses Module_Global, Frm_City, Module_Persons, Module_Basic, Form_PersonsInCare,
+  Frm_WorkHistory;
 
 procedure TFrmPerson.BtnCancelClick(Sender: TObject);
 begin
@@ -189,6 +227,86 @@ begin
   openCityList();
 end;
 
+procedure TFrmPerson.BtnEditClick(Sender: TObject);
+var
+  dateOfBD: string;
+  ComponentesFecha: TArray<string>;
+begin
+  with ModulePersons.QPersons do
+  begin
+    if recordcount > 0 then
+    begin
+      EdtCod.Text := FieldByName('IdPersons').AsString;
+      EdtName.Text := FieldByName('Name').AsString;
+      EdtPSurName.Text := FieldByName('Surname').AsString;
+      EdtSSuerName.Text := FieldByName('SecondSurname').AsString;
+      EdtIdentification.Text := FieldByName('identification').AsString;
+      EdtExpedition.Text := FieldByName('expedition').AsString;
+
+      dateOfBD := FieldByName('Birthdate').AsString;
+      ComponentesFecha := SplitString(dateOfBD, '/');
+
+      EdtYear.Text := ComponentesFecha[2];
+      EdtMonth.Text := ComponentesFecha[1];
+      EdtDay.Text := ComponentesFecha[0];
+
+      EdtCityBirth.Text := FieldByName('CityBirth').AsString;;
+      EdtDepartamentBirth.Text := FieldByName('DepartmetBirth').AsString;
+
+      CBGender.ItemIndex := CBGender.Items.IndexOf(FieldByName('Gender')
+        .AsString);
+
+      if CBGender.ItemIndex = 0 then
+      begin
+        GBMilitary.Enabled := true;
+      end
+      else
+      begin
+        GBMilitary.Enabled := false;
+        CbClassMilitary.ItemIndex := -1;
+        EdtNMilitary.Clear;
+        EdtmilitaryDistrict.Clear
+      end;
+
+      CbBloodType.ItemIndex := CbBloodType.Items.IndexOf
+        (FieldByName('BloodType').AsString);
+
+      EdtNMilitary.Text := FieldByName('MilitaryCard').AsString;
+      CbClassMilitary.ItemIndex := CbClassMilitary.Items.IndexOf
+        (FieldByName('MilitaryCardClass').AsString);
+      EdtmilitaryDistrict.Text := FieldByName('District').AsString;
+
+      if FieldByName('DrivingLicense').AsBoolean then
+        RbConduccion.ItemIndex := 0
+      else
+        RbConduccion.ItemIndex := 1;
+
+      EdtNLicense.Text := FieldByName('CategoryLicense').AsString;
+      EdtCityResidence.Text := FieldByName('CityResidence').AsString;
+      EdtResidenceAddress.Text := FieldByName('ResidenceAddress').AsString;
+
+      if FieldByName('OwnHouse').AsBoolean then
+        RbHose.ItemIndex := 0
+      else
+        RbHose.ItemIndex := 1;
+
+      EdtNPhone.Text := FieldByName('NCellPhone').AsString;
+      CbEducationLevel.ItemIndex := CbEducationLevel.Items.IndexOf
+        (FieldByName('EducationLevel').AsString);
+      CbCivilStatus.ItemIndex := CbCivilStatus.Items.IndexOf
+        (FieldByName('CivilStatus').AsString);
+      EdtNamesSurNames.Text := FieldByName('NameContact').AsString;
+      EdtNPhoneE.Text := FieldByName('PhoneContact').AsString;
+      EdtAddressE.Text := FieldByName('AnddressContact').AsString;
+
+      ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit,
+        BtnNew, Self);
+      PnCrud.Height := 600;
+    end;
+
+  end;
+end;
+
 procedure TFrmPerson.BtnExpeditionListClick(Sender: TObject);
 begin
   FLastButtonActivated := BtnExpeditionList;
@@ -198,7 +316,7 @@ end;
 procedure TFrmPerson.BtnNewClick(Sender: TObject);
 begin
   ModuleGlobal.activateDeactivate(true, PnCrud, DBGView, BtnEdit, BtnNew, Self);
-  PnCrud.Height := 535;
+  PnCrud.Height := 600;
 end;
 
 procedure TFrmPerson.BtnSaveClick(Sender: TObject);
@@ -220,12 +338,12 @@ begin
     ShowMessage('Los Campos del Grupo de Datos ' + GBBiologicas.Caption +
       ' (*) son Obligatorios.');
   end
-  else if (CBGender.ItemIndex = 0) and (EdtNMilitary.Text = '') or
-    (EdtmilitaryDistrict.Text = '') or (CbClassMilitary.ItemIndex = -1) then
+  else if (CBGender.ItemIndex = 0) and
+    ((EdtNMilitary.Text = '') or (EdtmilitaryDistrict.Text = '') or
+    (CbClassMilitary.ItemIndex = -1)) then
   begin
     ShowMessage('Los Campos del Grupo de Datos ' + GBMilitary.Caption +
       ' (*) son Obligatorios.');
-    ShowMessage('gender1');
   end
   else if (EdtCityResidence.Text = '') or (EdtResidenceAddress.Text = '') or
     (EdtNPhone.Text = '') or (CbEducationLevel.ItemIndex = -1) or
@@ -239,7 +357,6 @@ begin
 
     ShowMessage('Los Campos del Grupo de Datos ' + GBAPersonal.Caption +
       ' (*) son Obligatorios.');
-
   end
   else if (EdtNamesSurNames.Text = '') or (EdtNPhoneE.Text = '') or
     (EdtAddressE.Text = '') then
@@ -340,9 +457,38 @@ begin
       end;
 
       ModulePersons.resetPersons();
+      case EdtCod.Text = '' of
+        true:
+          begin
+            // open Form People a burden
+            OpenPersonIncare(true);
+          end;
+      end;
       activateDeactivate(false, PnCrud, DBGView, BtnEdit, BtnNew, Self);
     end;
 
+  end;
+end;
+
+procedure TFrmPerson.Button1Click(Sender: TObject);
+begin
+  OpenPersonIncare(false);
+end;
+
+procedure TFrmPerson.Button3Click(Sender: TObject);
+begin
+  try
+    FrmWorkHistory := TFrmWorkHistory.Create(Application);
+
+    with FrmWorkHistory do
+    begin
+      EdtCodPerson.Text := ModulePersons.QPersons.FieldByName
+        ('IdPersons').AsString;
+      ShowModal;
+    end;
+
+  finally
+    FreeAndNil(FrmWorkHistory);
   end;
 end;
 
@@ -381,19 +527,51 @@ begin
   end;
 end;
 
+procedure TFrmPerson.EdtBuscarChange(Sender: TObject);
+begin
+  with ModulePersons.QPersons do
+  begin
+    FilterOptions := [foCaseInsensitive];
+    Filter := 'Name like ' + QuotedStr('%' + EdtBuscar.Text + '%') + ' or ' +
+      'Identification like ' + QuotedStr('%' + EdtBuscar.Text + '%');
+    Filtered := true;
+  end;
+end;
+
 procedure TFrmPerson.EdtDayChange(Sender: TObject);
 begin
-  updateDate();
+  updateDate(EdtYear.Text, EdtMonth.Text, EdtDay.Text, _date, _age);
+  LbBirthDate.Caption := _date;
+  LbAge.Caption := _age;
 end;
 
 procedure TFrmPerson.EdtMonthChange(Sender: TObject);
 begin
-  updateDate();
+  updateDate(EdtYear.Text, EdtMonth.Text, EdtDay.Text, _date, _age);
+  LbBirthDate.Caption := _date;
+  LbAge.Caption := _age;
 end;
 
 procedure TFrmPerson.EdtYearChange(Sender: TObject);
 begin
-  updateDate();
+  updateDate(EdtYear.Text, EdtMonth.Text, EdtDay.Text, _date, _age);
+  LbBirthDate.Caption := _date;
+  LbAge.Caption := _age;
+end;
+
+procedure TFrmPerson.FormActivate(Sender: TObject);
+begin
+  ModulePersons.resetPersons();
+  EdtBuscar.SetFocus();
+end;
+
+procedure TFrmPerson.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Sender is TDBEdit then
+  begin
+    ShowMessage('-');
+    Key := #0;
+  end;
 end;
 
 procedure TFrmPerson.openCityList;
@@ -412,6 +590,27 @@ begin
   end;
 end;
 
+procedure TFrmPerson.OpenPersonIncare(new: boolean);
+begin
+  try
+    FrmPersonsInCare := TFrmPersonsInCare.Create(Application);
+
+    with FrmPersonsInCare do
+    begin
+      EdtCodPerson.Text := ModulePersons.QPersons.FieldByName
+        ('IdPersons').AsString;
+      case new of
+        true:
+          BtnNew.Click();
+      end;
+      ShowModal;
+    end;
+
+  finally
+    FreeAndNil(FrmPersonsInCare);
+  end;
+end;
+
 procedure TFrmPerson.RbConduccionClick(Sender: TObject);
 begin
   case RbConduccion.ItemIndex of
@@ -422,14 +621,54 @@ begin
   end;
 end;
 
-procedure TFrmPerson.updateDate;
+function TFrmPerson.SplitString(const S: string; Delimiter: Char)
+  : TArray<string>;
+var
+  StartIndex, EndIndex, Count, I: Integer;
+begin
+  // Inicializar variables
+  Count := 0;
+  StartIndex := 1;
+
+  // Contar la cantidad de delimitadores en la cadena
+  for I := 1 to Length(S) do
+  begin
+    if S[I] = Delimiter then
+      Inc(Count);
+  end;
+
+  // Incrementar la cuenta para incluir el último elemento
+  Inc(Count);
+
+  // Crear el array de strings con la longitud adecuada
+  SetLength(Result, Count);
+
+  // Dividir la cadena en componentes y asignarlos al array
+  EndIndex := Pos(Delimiter, S);
+  for I := 0 to Count - 1 do
+  begin
+    if EndIndex = 0 then
+      EndIndex := Length(S) + 1;
+
+    Result[I] := Copy(S, StartIndex, EndIndex - StartIndex);
+    StartIndex := EndIndex + 1;
+    EndIndex := Pos(Delimiter, Copy(S, StartIndex, MaxInt));
+    if EndIndex = 0 then
+      EndIndex := Length(S) + 1
+    else
+      EndIndex := EndIndex + StartIndex - 1;
+  end;
+end;
+
+procedure TFrmPerson.updateDate(_Year, _Month, _Day: string;
+  out _date, _age: string);
 var
   Year, Month, Day: Integer;
   BirthDate, Today: TDateTime;
   AgeYears, AgeMonths, AgeDays: Integer;
 begin
-  if TryStrToInt(EdtYear.Text, Year) and TryStrToInt(EdtMonth.Text, Month) and
-    TryStrToInt(EdtDay.Text, Day) then
+  if TryStrToInt(_Year, Year) and TryStrToInt(_Month, Month) and
+    TryStrToInt(_Day, Day) then
   begin
     if (Year >= 1) and (Year <= 9999) and (Month >= 1) and (Month <= 12) and
       (Day >= 1) and (Day <= DaysInMonth(Year, Month)) then
@@ -438,7 +677,7 @@ begin
       BirthDate := EncodeDate(Year, Month, Day);
 
       // Get current date
-      Today := Date;
+      Today := date;
 
       // Calculate the difference of years, months and days
       AgeYears := YearOf(Today) - Year;
@@ -458,22 +697,22 @@ begin
       end;
 
       // Display date of birth in yyyy-mm-dd format
-      LbBirthDate.Caption := Format('%4.4d-%2.2d-%2.2d', [Year, Month, Day]);
+      _date := Format('%4.4d-%2.2d-%2.2d', [Year, Month, Day]);
 
       // Show age in years, months and days
-      LbAge.Caption := Format('%d Años, %d Meses, %d Días',
+      _age := Format('%d Años, %d Meses, %d Días',
         [AgeYears, AgeMonths, AgeDays]);
     end
     else
     begin
-      LbBirthDate.Caption := 'False';
-      LbAge.Caption := '0 Años 0 Meses 0 Días';
+      _date := 'False';
+      _age := '0 Años 0 Meses 0 Días';
     end;
   end
   else
   begin
-    LbBirthDate.Caption := '0000-00-00';
-    LbAge.Caption := '0 Años 0 Meses 0 Días';
+    _date := '0000-00-00';
+    _age := '0 Años 0 Meses 0 Días';
   end;
 end;
 

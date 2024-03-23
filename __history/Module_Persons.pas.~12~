@@ -1,0 +1,108 @@
+unit Module_Persons;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DB, MemDS, DBAccess, Uni, DateUtils;
+
+type
+  TModulePersons = class(TDataModule)
+    QPersons: TUniQuery;
+    DSPersons: TDataSource;
+    QPersonsInCare: TUniQuery;
+    DsPersonsInCare: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    function resetPersons(): string;
+    function resetPersonsInMyCare(id: string): string;
+    function updateDate(_Year, _Month, _Day: string);
+  end;
+
+var
+  ModulePersons: TModulePersons;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+{$R *.dfm}
+{ TModulePersons }
+
+function TModulePersons.resetPersons: string;
+begin
+  with QPersons do
+  begin
+    Active := false;
+    Active := true;
+    Result := IntToStr(recordcount);
+  end;
+end;
+
+function TModulePersons.resetPersonsInMyCare(id: string): string;
+begin
+  with QPersonsInCare do
+  begin
+    Active := false;
+    ParamByName('id').Value := id;
+    Active := true;
+    Result := IntToStr(recordcount);
+  end;
+end;
+
+function TModulePersons.updateDate(_Year, _Month, _Day: string): string;
+var
+  Year, Month, Day: Integer;
+  BirthDate, Today: TDateTime;
+  AgeYears, AgeMonths, AgeDays: Integer;
+begin
+  if TryStrToInt(_Year, Year) and TryStrToInt(_Month, Month) and
+    TryStrToInt(_Day, Day) then
+  begin
+    if (Year >= 1) and (Year <= 9999) and (Month >= 1) and (Month <= 12) and
+      (Day >= 1) and (Day <= DaysInMonth(Year, Month)) then
+    begin
+      // Build date of birth
+      BirthDate := EncodeDate(Year, Month, Day);
+
+      // Get current date
+      Today := Date;
+
+      // Calculate the difference of years, months and days
+      AgeYears := YearOf(Today) - Year;
+      AgeMonths := MonthOf(Today) - Month;
+      AgeDays := DayOf(Today) - Day;
+
+      // Adjust the years and months if necessary
+      if AgeDays < 0 then
+      begin
+        Dec(AgeMonths);
+        AgeDays := AgeDays + DaysInMonth(YearOf(Today), MonthOf(Today));
+      end;
+      if AgeMonths < 0 then
+      begin
+        Dec(AgeYears);
+        AgeMonths := AgeMonths + 12;
+      end;
+
+      // Display date of birth in yyyy-mm-dd format
+      LbBirthDate.Caption := Format('%4.4d-%2.2d-%2.2d', [Year, Month, Day]);
+
+      // Show age in years, months and days
+      LbAge.Caption := Format('%d Años, %d Meses, %d Días',
+        [AgeYears, AgeMonths, AgeDays]);
+    end
+    else
+    begin
+      LbBirthDate.Caption := 'False';
+      LbAge.Caption := '0 Años 0 Meses 0 Días';
+    end;
+  end
+  else
+  begin
+    LbBirthDate.Caption := '0000-00-00';
+    LbAge.Caption := '0 Años 0 Meses 0 Días';
+  end;
+end;
+
+end.
